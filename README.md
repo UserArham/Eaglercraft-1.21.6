@@ -2,33 +2,29 @@
 
 A browser-based client project targeting Minecraft Java Edition 1.21.6.
 
-> **Development status: bootstrap only.** This repository does not contain a playable client yet. It currently contains project documentation and the repository license. Do not advertise it as a working 1.21.6 build until the game engine has been ported, compiled, and tested.
+> **Status: early development / not playable.** The repository now contains a browser platform layer and a WebGL2 renderer smoke test. It does not yet contain Minecraft game code, a 1.21.6 protocol implementation, or a playable client.
 
-## Goals
+## Current implementation
 
-- Target Java Edition 1.21.6 protocol and gameplay behavior.
-- Run in a modern web browser without requiring a local Java installation.
-- Use a reproducible Java-to-WebAssembly/JavaScript toolchain.
-- Keep the browser runtime, rendering, input, networking, and game logic clearly separated.
-- Preserve attribution and license notices for every third-party component.
+- [x] Dedicated repository and Apache-2.0 license file.
+- [x] Browser entry page in `web/index.html`.
+- [x] WebGL2 context initialization and responsive canvas sizing.
+- [x] WebGL2 shader compilation, vertex buffers, depth testing, and animation loop smoke test (`web/renderer.js`).
+- [x] Browser platform adapters for keyboard input, pointer lock, local storage, WebSocket creation, and Web Audio (`web/platform.js`).
+- [ ] Identify and verify a legally usable 1.21.6-compatible game source baseline.
+- [ ] Establish a reproducible Java 21 / TeaVM build pipeline.
+- [ ] Integrate actual Minecraft client code and required browser-compatible replacements.
+- [ ] Implement and test 1.21.6 networking, assets, rendering, audio, and gameplay.
+- [ ] Publish a playable build only after compatibility testing.
 
-## Current state
+## Run the renderer smoke test
 
-- [x] Dedicated repository created.
-- [x] Apache-2.0 repository license present.
-- [ ] Identify and verify a legally usable 1.21.6-compatible source baseline.
-- [ ] Establish the Java 21 / TeaVM toolchain and reproducible build.
-- [ ] Port or implement the client runtime.
-- [ ] Implement browser input, rendering, audio, storage, and networking.
-- [ ] Test single-player and multiplayer behavior.
-- [ ] Publish a build only after successful compatibility and browser testing.
+Serve the repository's `web/` directory from a local HTTP server and open `web/index.html` through that server. ES modules generally should not be tested by opening the file directly with `file://`.
 
-## Important licensing note
+The page displays a rotating test cube when WebGL2 is available. The cube is only a graphics-pipeline test; it is not Minecraft gameplay.
 
-The Apache-2.0 license in this repository applies only to original project material that its contributors are authorized to license. It does not grant rights to Minecraft's proprietary code, assets, trademarks, or other third-party material. Any imported component must be reviewed under its own license and attribution requirements. Do not add proprietary game assets or source code unless their use and redistribution are authorized.
+## Licensing
 
-## Development
+The Apache-2.0 license in this repository applies only to original project material that contributors are authorized to license. It does not grant rights to Minecraft's proprietary code, assets, or trademarks. Every imported component must be reviewed under its own license and attribution requirements. Do not add proprietary game assets or source code unless their use and redistribution are authorized.
 
-See [DEVELOPMENT.md](DEVELOPMENT.md) for the initial architecture and build plan.
-
-There is intentionally no fake launcher or placeholder claiming to run Minecraft. A playable build will be added when the actual 1.21.6 engine and browser runtime are available.
+See [DEVELOPMENT.md](DEVELOPMENT.md) for architecture and build requirements.
