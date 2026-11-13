@@ -1,12 +1,35 @@
 import { createBrowserPlatform } from "./platform.js";
 import { createRenderer } from "./renderer.js";
+import { CLIENT_CONFIG } from "./config.js";
+import { getBrowserDiagnostics } from "./diagnostics.js";
+import { loadEngine } from "./engine-loader.js";
 
 const status = document.querySelector("#runtime-status");
 const graphicsStatus = document.querySelector("#graphics-status");
 const inputStatus = document.querySelector("#input-status");
+const diagnosticsList = document.querySelector("#diagnostics-list");
 const canvas = document.querySelector("#game-canvas");
 
+function renderDiagnostics() {
+  const checks = getBrowserDiagnostics();
+  const labels = [
+    ["WebGL 2", checks.webgl2],
+    ["WebAssembly", checks.webAssembly],
+    ["WebSocket", checks.webSocket],
+    ["Pointer Lock", checks.pointerLock],
+    ["Web Audio", checks.audio],
+    ["Secure context", checks.secureContext]
+  ];
+  diagnosticsList.replaceChildren(...labels.map(([label, supported]) => {
+    const item = document.createElement("li");
+    item.textContent = `${label}: ${supported ? "Available" : "Unavailable"}`;
+    item.dataset.ok = String(supported);
+    return item;
+  }));
+}
+
 try {
+  renderDiagnostics();
   const platform = createBrowserPlatform({ canvas });
   const graphics = platform.graphics;
 
@@ -21,23 +44,33 @@ try {
     inputStatus.textContent = event.locked ? "Input: pointer locked" : "Input: ready";
   });
 
-  // A rotating cube verifies the WebGL2 shader, buffer, depth, and frame-loop path.
-  // It is deliberately labeled as a renderer test, not Minecraft gameplay.
+  // Renderer smoke test only; no Minecraft world or game logic is present.
   const renderer = createRenderer(graphics.gl);
   renderer.start();
 
-  status.textContent = "Renderer test running · game engine pending";
+  const engine = await loadEngine({
+    modulePath: CLIENT_CONFIG.engineModule,
+    platform,
+    canvas,
+    config: CLIENT_CONFIG
+  });
+
+  status.textContent = engine.loaded
+    ? "Browser platform ready · game engine loaded"
+    : "Renderer test running · game engine pending";
   status.dataset.state = "ready";
   window.eaglercraftPlatform = platform;
   window.eaglercraftRendererTest = renderer;
+  window.eaglercraftEngine = engine;
 
   window.addEventListener("beforeunload", () => {
     renderer.dispose();
     input.dispose();
+    if (engine.loaded) engine.client.dispose();
   }, { once: true });
 } catch (error) {
-  console.error("Browser platform initialization failed:", error);
-  status.textContent = "Browser platform failed";
+  console.error("Client initialization failed:", error);
+  status.textContent = "Client initialization failed";
   status.dataset.state = "error";
   graphicsStatus.textContent = error.message;
 }
