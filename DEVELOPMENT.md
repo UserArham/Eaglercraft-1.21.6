@@ -1,58 +1,69 @@
-# Development plan
+# Development guide
 
-## Repository structure (planned)
+## Current repository layout
 
 ```text
 .
-├── docs/
-│   ├── ARCHITECTURE.md
-│   └── COMPATIBILITY.md
-├── src/
-│   ├── client/       # game/client logic
-│   ├── platform/     # browser-specific APIs
-│   └── wasm/         # generated or hand-written WASM integration
+├── .github/workflows/pages.yml  # static Pages deployment
 ├── web/
-│   ├── index.html    # browser entry point
-│   └── assets/       # project-owned runtime assets only
-├── tools/            # reproducible build scripts
+│   ├── index.html               # browser UI
+│   ├── main.js                  # startup and diagnostics
+│   ├── config.js                # public client configuration
+│   ├── diagnostics.js           # browser feature checks
+│   ├── engine-loader.js         # future engine integration boundary
+│   ├── platform.js              # browser API adapters
+│   ├── renderer.js              # WebGL2 smoke-test renderer
+│   └── style.css
+├── index.html                   # Pages root entry point
+├── .nojekyll
 ├── DEVELOPMENT.md
 ├── LICENSE
 └── README.md
 ```
 
-This is a target layout, not a claim that these directories or components already exist.
+## GitHub Pages deployment
 
-## Baseline requirements
+1. Open repository **Settings → Pages**.
+2. Set **Build and deployment → Source** to **GitHub Actions**.
+3. Push changes to `main`, or manually run the **Deploy GitHub Pages** workflow under Actions.
+4. Check the workflow run before expecting the site to be updated.
 
-Before implementation begins, verify all of the following:
+The workflow copies only the static root entry point and `web/` assets into the Pages artifact. No Node.js, backend server, or Java installation is required to host this static development page.
 
-1. The source baseline actually targets Java Edition 1.21.6.
-2. The source and every dependency can legally be used and redistributed in this project.
-3. The selected compiler supports the language and runtime features used by the baseline.
-4. The build can be reproduced from documented source inputs.
-5. Browser APIs used by the client have explicit compatibility and fallback behavior.
+## Browser platform services
 
-## Browser runtime boundaries
+`web/platform.js` provides:
+- WebGL2 context creation and canvas resizing;
+- keyboard state and pointer-lock tracking;
+- namespaced local storage with error handling;
+- validated WebSocket URL creation;
+- Web Audio context initialization after a user gesture.
 
-Keep browser integration behind small platform interfaces:
+`web/diagnostics.js` reports browser capabilities. `web/renderer.js` is a minimal rotating-cube test for the graphics pipeline, not a Minecraft renderer.
 
-- keyboard, mouse, touch, and pointer-lock input;
-- WebGL rendering and context-loss recovery;
-- audio output and user-gesture restrictions;
-- persistent storage with quota/error handling;
-- WebSocket networking;
-- download/import handling for user-provided configuration.
+## Engine integration contract
 
-Avoid assuming that desktop Java APIs are available in a browser. Any emulation or replacement must be explicit and tested.
+The engine loader expects a same-origin ES module whose exports include:
 
-## Build and release policy
+```js
+export async function createClient({ platform, canvas, config }) {
+  return {
+    start() {},
+    stop() {},
+    dispose() {}
+  };
+}
+```
 
-- Never commit generated output as if it were a verified release.
-- Record compiler versions, dependency versions, and source revisions.
-- Keep third-party notices with the corresponding components.
-- Test the built artifact in supported browsers before calling it playable.
-- Do not claim 1.21.6 compatibility based only on a 1.21.1 client or protocol shim.
+Do not configure `engineModule` in `web/config.js` until a real, verified Minecraft 1.21.6 client implementation exists and has been built for the browser. The current value is intentionally `null`.
 
-## Immediate blocker
+## Requirements before a real game port
 
-A verified, legally usable 1.21.6-compatible client source baseline has not yet been added. Until that is identified, this repository is documentation-only.
+1. Verify that the source baseline genuinely targets Java Edition 1.21.6.
+2. Verify redistribution rights for the source, dependencies, assets, and build outputs.
+3. Select and pin a compatible Java-to-WebAssembly/JavaScript compiler and toolchain.
+4. Replace unsupported desktop APIs with documented browser platform implementations.
+5. Validate the protocol, asset pipeline, rendering, input, audio, storage, and multiplayer behavior.
+6. Run browser compatibility tests before publishing a playable release.
+
+A 1.21.1 client with its version string changed is not a 1.21.6 port. Do not label a build playable until the actual game engine is integrated and tested.
