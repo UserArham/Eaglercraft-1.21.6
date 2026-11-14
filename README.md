@@ -1,40 +1,31 @@
-# Eaglercraft browser client — Treasure Client 1.2
+# Eaglercraft browser client — 1.12.2 Modded
 
-The GitHub Pages launcher now opens **Treasure Client 1.2**, an Eaglercraft **1.12.2** client whose release changelog lists its ViaVersion-style modern-content integration.
+This project launches the real Eaglercraft 1.12.2 Modded client from [UserArham/Eaglercraft-1.12.2-Modded](https://github.com/UserArham/Eaglercraft-1.12.2-Modded).
 
-## Play
+## ViaVersion / ViaBlocks scope
 
-GitHub Pages: https://userarham.github.io/Eaglercraft-1.21.6/
+The intended addition is **only the ViaVersion-style modern-content functionality**: ViaBlocks, ViaItems, and the required client-side compatibility pieces. This project is not intended to rebrand or replace its base client with Treasure Client.
 
-The launcher embeds the published WASM build at:
+[ Treasure Client V1.2 ](https://github.com/TreasureClient/treasureclient.github.io/releases/tag/V1.2) and its [source repository](https://github.com/TreasureClient/Treasure-Client-1.12-src) are reference material for studying that implementation. No Treasure Client launcher or full Treasure Client build is embedded here.
 
-- https://treasureclient.github.io/versions/1.12WASM.html
+**Status:** the original Eaglercraft launcher is restored. The ViaBlocks implementation has not yet been ported into the UserArham client engine. The current UserArham/Eaglercraft-1.12.2-Modded repository exposes a compiled client bundle and assets, not the Java source tree needed to merge the feature properly. Therefore modern blocks/items and TuffX+ support are not claimed as implemented by this repository yet.
 
-The original UserArham Eaglercraft 1.12.2 Modded launcher is preserved at [web/legacy.html](web/legacy.html).
+## Current runtime
 
-## Treasure Client 1.2 features
+- Actual compiled Eaglercraft client: `classes.js`
+- Matching assets: `assets.epk`
+- Browser-local single-player world storage
+- Configured multiplayer server entries
+- Fullscreen control and optional texture-pack links
 
-The upstream 1.2 changelog describes:
-- Modern blocks and items on supported newer servers
-- Modern items including wind charges, maces, spears and copper items
-- Updated block/item textures and potion colors
-- Spear jab and charge behavior
-- TuffX+ modern block and mob compatibility
-
-These are upstream release claims; this repository embeds the published build and does not independently certify compatibility with every server. Server-side support may be required.
-
-## Upstream source and attribution
-
-- Client/release: [TreasureClient/treasureclient.github.io](https://github.com/TreasureClient/treasureclient.github.io)
-- Source: [TreasureClient/Treasure-Client-1.12-src](https://github.com/TreasureClient/Treasure-Client-1.12-src)
-- Release: [Treasure Client V1.2](https://github.com/TreasureClient/treasureclient.github.io/releases/tag/V1.2)
-
-The source repository declares Apache License 2.0. The client is hosted by its upstream publisher and loaded in an iframe; this project does not copy or relicense its compiled client. See upstream notices for third-party components and Minecraft-related rights.
+The optional texture packs are visual-only; they do not implement ViaBlocks or modern gameplay.
 
 ## GitHub Pages
 
-In **Settings → Pages**, choose **GitHub Actions** as the deployment source. The existing workflow publishes the static `web/` directory. Its concurrency setting remains unchanged (`cancel-in-progress: false`).
+In **Settings → Pages**, choose **GitHub Actions** as the deployment source. The existing workflow publishes the static `web/` directory. Keep its concurrency setting `cancel-in-progress: false`.
 
-## Version note
+Expected URL: https://userarham.github.io/Eaglercraft-1.21.6/
 
-This is Eaglercraft **1.12.2**, not Minecraft 1.21.6. The repository name is retained, but the launched game's actual version is shown accurately.
+## Licensing
+
+The original client and assets remain hosted in their existing source repository. Review that repository's license and notices for upstream components. This repository's license applies only to original project material it is authorized to license.

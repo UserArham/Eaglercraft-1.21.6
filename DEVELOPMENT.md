@@ -1,23 +1,25 @@
 # Development notes
 
-## Active client integration
+## Base client
 
-`web/index.html` embeds the published Treasure Client 1.2 WASM build:
+The active launcher loads the actual Eaglercraft 1.12.2 Modded runtime from:
 
-- https://treasureclient.github.io/versions/1.12WASM.html
+- Engine: https://raw.githubusercontent.com/UserArham/Eaglercraft-1.12.2-Modded/main/classes.js
+- Assets: https://raw.githubusercontent.com/UserArham/Eaglercraft-1.12.2-Modded/main/assets.epk
 
-This is an upstream-hosted Eaglercraft **1.12.2** client. Its V1.2 release changelog advertises modern blocks/items, wind charges, maces, spears, copper items, updated textures and potion colors, spear jab/charge, and TuffX+ support. Server compatibility depends on the corresponding upstream/server implementation.
+The launch page configures `window.eaglercraftXOpts` and invokes the real client's `main()` entry point.
 
-The launcher provides a fullscreen control and a direct upstream fallback link. The original UserArham Eaglercraft 1.12.2 Modded launcher is preserved as `web/legacy.html`.
+## ViaBlocks port — pending
 
-## Upstream source
+Requested scope is limited to the ViaVersion-style modern-content features (ViaBlocks, ViaItems and associated compatibility code). Treasure Client V1.2 is a reference implementation only:
 
 - Release: https://github.com/TreasureClient/treasureclient.github.io/releases/tag/V1.2
 - Source: https://github.com/TreasureClient/Treasure-Client-1.12-src
-- Source repository license: Apache-2.0 (review upstream notices for third-party components).
 
-The compiled client is loaded from the publisher's GitHub Pages site in an iframe; this project does not rebuild or modify its engine.
+Do not replace the UserArham client with the Treasure Client build or copy its launcher/branding. Port only the required engine-side ViaBlocks-related source and assets, with attribution and license notices as required.
+
+The current `UserArham/Eaglercraft-1.12.2-Modded` repo contains the compiled `classes.js` and `assets.epk`, but does not expose the editable Java source tree. A proper engine-level port cannot be completed against the compiled bundle alone. Until the editable source is available and the port is compiled/tested, do not claim modern blocks/items or TuffX+ compatibility are implemented.
 
 ## GitHub Pages
 
-The existing `.github/workflows/pages.yml` workflow deploys the root redirect and `web/` directory. Preserve its `cancel-in-progress: false` concurrency setting.
+The existing `.github/workflows/pages.yml` deploys the static `web/` directory. Preserve `cancel-in-progress: false`.
