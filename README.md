@@ -1,29 +1,40 @@
-# Eaglercraft browser client — 1.12.2 Modded
+# Eaglercraft browser client — Treasure Client 1.2
 
-This GitHub Pages project now launches the **real Eaglercraft 1.12.2 Modded client** from [UserArham/Eaglercraft-1.12.2-Modded](https://github.com/UserArham/Eaglercraft-1.12.2-Modded). It is not a Minecraft 1.21.6 client. The earlier 1.21.6 label was a target that this source does not satisfy.
+The GitHub Pages launcher now opens **Treasure Client 1.2**, an Eaglercraft **1.12.2** client whose release changelog lists its ViaVersion-style modern-content integration.
 
-## What runs
+## Play
 
-- The actual compiled Eaglercraft client bundle: `classes.js`.
-- The matching game asset package: `assets.epk`.
-- The source client's configured multiplayer entries.
-- Browser-local single-player world storage via IndexedDB.
-- A fullscreen control and links to optional texture-pack archives.
+GitHub Pages: https://userarham.github.io/Eaglercraft-1.21.6/
 
-The game engine and asset package are loaded from the source repository's `main` branch using raw GitHub URLs. The source repository must remain available, and GitHub's raw content host must be reachable from the browser.
+The launcher embeds the published WASM build at:
 
-## Modern-looking textures and ViaVersion
+- https://treasureclient.github.io/versions/1.12WASM.html
 
-The page provides optional downloads for the source repository's `1-21-textures-for-1-12.zip` and `26-1-textures-for-1-12.zip` archives. Download a pack and try it through the in-game **Options → Resource Packs** screen. Texture packs can change appearances only; they do not add modern item IDs, recipes, blocks, entities, or mechanics. The packs are supplied as-is, and compatibility with this exact client build has not been independently verified.
+The original UserArham Eaglercraft 1.12.2 Modded launcher is preserved at [web/legacy.html](web/legacy.html).
 
-ViaVersion is server-side protocol translation. It is not a client mod or item pack, and placing a ViaVersion jar in this static GitHub Pages site would not enable it. Connecting this Eaglercraft client to modern Java servers requires a compatible Eaglercraft-to-Java protocol bridge plus appropriate server-side translation (for older-client-to-newer-server support, a server setup may also need ViaBackwards). No such bridge or ViaVersion server has been configured by this repository.
+## Treasure Client 1.2 features
+
+The upstream 1.2 changelog describes:
+- Modern blocks and items on supported newer servers
+- Modern items including wind charges, maces, spears and copper items
+- Updated block/item textures and potion colors
+- Spear jab and charge behavior
+- TuffX+ modern block and mob compatibility
+
+These are upstream release claims; this repository embeds the published build and does not independently certify compatibility with every server. Server-side support may be required.
+
+## Upstream source and attribution
+
+- Client/release: [TreasureClient/treasureclient.github.io](https://github.com/TreasureClient/treasureclient.github.io)
+- Source: [TreasureClient/Treasure-Client-1.12-src](https://github.com/TreasureClient/Treasure-Client-1.12-src)
+- Release: [Treasure Client V1.2](https://github.com/TreasureClient/treasureclient.github.io/releases/tag/V1.2)
+
+The source repository declares Apache License 2.0. The client is hosted by its upstream publisher and loaded in an iframe; this project does not copy or relicense its compiled client. See upstream notices for third-party components and Minecraft-related rights.
 
 ## GitHub Pages
 
-In **Settings → Pages**, choose **GitHub Actions** as the deployment source. The existing workflow publishes the static `web/` directory. The Pages workflow has been left unchanged.
+In **Settings → Pages**, choose **GitHub Actions** as the deployment source. The existing workflow publishes the static `web/` directory. Its concurrency setting remains unchanged (`cancel-in-progress: false`).
 
-Expected URL: https://userarham.github.io/Eaglercraft-1.21.6/
+## Version note
 
-## Attribution and licensing
-
-The client bundle, asset package, and optional texture archives are loaded from [UserArham/Eaglercraft-1.12.2-Modded](https://github.com/UserArham/Eaglercraft-1.12.2-Modded). Review that repository's license and notices for the upstream components. The Apache-2.0 license in this repository applies only to original project material that contributors are authorized to license; it does not grant rights to Minecraft proprietary content or trademarks.
+This is Eaglercraft **1.12.2**, not Minecraft 1.21.6. The repository name is retained, but the launched game's actual version is shown accurately.

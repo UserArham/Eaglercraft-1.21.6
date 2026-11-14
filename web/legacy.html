@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101610">
+<meta name="description" content="Eaglercraft 1.12.2 Modded browser client">
+<title>Eaglercraft 1.12.2 Modded</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:#090d0a;color:#edf4eb}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#090d0a}
+#game_frame{position:fixed;inset:0;background:#000}
+#game_frame canvas{display:block}
+.top-ui{position:fixed;z-index:10;top:14px;left:14px;right:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;pointer-events:none}
+.brand,.tools{display:flex;align-items:center;gap:10px;pointer-events:auto}
+.brand{padding:10px 14px;border:1px solid #334331;background:#101810eF;border-radius:13px;box-shadow:0 8px 32px #0008}
+.mark{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#86c76d;color:#0b1608;font-weight:900}
+.brand strong{display:block;font-size:13px;letter-spacing:.02em}.brand small{display:block;color:#9caf98;font-size:11px;margin-top:2px}
+.tools button,.tools a{border:1px solid #394938;background:#121b12;color:#edf4eb;border-radius:10px;padding:10px 13px;font:600 12px inherit;text-decoration:none;cursor:pointer}
+.tools button:hover,.tools a:hover{background:#1c2b1a;border-color:#75ad62}
+.info{position:fixed;z-index:10;bottom:14px;left:14px;max-width:min(620px,calc(100vw - 28px));padding:10px 13px;border:1px solid #354333;border-radius:12px;background:#101810ed;color:#b9c8b4;font-size:11px;line-height:1.55;backdrop-filter:blur(12px)}
+.info strong{color:#edf4eb}.info a{color:#a8df91}.status{color:#a8df91}
+#loading{position:fixed;inset:0;z-index:5;display:grid;place-items:center;background:#090d0a;text-align:center;padding:24px}
+#loading[hidden]{display:none}.loader-card{max-width:440px}.loader-card h1{font-size:clamp(24px,5vw,38px);margin:0 0 10px}.loader-card p{color:#aab8a5;line-height:1.6;font-size:14px}.spinner{width:34px;height:34px;border:3px solid #30402d;border-top-color:#9bd77e;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 22px}@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:600px){.top-ui{top:8px;left:8px;right:8px;align-items:flex-start}.brand{padding:8px 10px}.tools{gap:6px;flex-wrap:wrap;justify-content:flex-end}.tools button,.tools a{padding:9px;font-size:11px}.info{bottom:8px;left:8px;max-width:calc(100vw - 16px)}}
+</style>
+<script src="https://raw.githubusercontent.com/UserArham/Eaglercraft-1.12.2-Modded/main/classes.js"></script>
+</head>
+<body>
+<div id="game_frame"></div>
+<div id="loading"><div class="loader-card"><div class="spinner"></div><h1>Starting Eaglercraft</h1><p>Loading the real 1.12.2 Modded client and its asset package…</p><p id="load-error" role="status"></p></div></div>
+<header class="top-ui">
+ <div class="brand"><span class="mark">E</span><span><strong>Eaglercraft</strong><small>1.12.2 · Modded client</small></span></div>
+ <nav class="tools" aria-label="Client tools">
+  <button id="fullscreen" type="button">Fullscreen</button>
+  <a href="https://github.com/UserArham/Eaglercraft-1.12.2-Modded" target="_blank" rel="noopener">Client source ↗</a>
+ </nav>
+</header>
+<aside class="info">
+ <strong class="status" id="client-status">Starting game…</strong> · Real Eaglercraft 1.12.2 client from <a href="https://github.com/UserArham/Eaglercraft-1.12.2-Modded">UserArham/Eaglercraft-1.12.2-Modded</a>.<br>
+ Optional modern-looking resource packs: <a href="https://raw.githubusercontent.com/UserArham/Eaglercraft-1.12.2-Modded/main/mods/1-21-textures-for-1-12.zip" download>1.21 textures</a> · <a href="https://raw.githubusercontent.com/UserArham/Eaglercraft-1.12.2-Modded/main/mods/26-1-textures-for-1-12.zip" download>26.1 textures</a>. Download and try them through the in-game Resource Packs menu; compatibility is not guaranteed.<br>
+ <strong>ViaVersion note:</strong> ViaVersion is server-side protocol translation, not a client item pack. It does not add modern item IDs or gameplay to this 1.12.2 client. Modern server access needs a compatible Eaglercraft-to-Java protocol bridge and server-side translation.
+</aside>
+<script>
+"use strict";
+const statusEl=document.getElementById("client-status");
+const loading=document.getElementById("loading");
+const errorEl=document.getElementById("load-error");
+document.getElementById("fullscreen").addEventListener("click",async()=>{
+ try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen();}
+ catch(e){statusEl.textContent="Fullscreen unavailable in this browser";}
+});
+window.addEventListener("error",e=>{
+ if(e.target&&e.target.tagName==="SCRIPT"){errorEl.textContent="The game engine script could not be loaded. Check access to raw.githubusercontent.com.";statusEl.textContent="Engine download failed";}
+},true);
+window.addEventListener("load",()=>{
+ try{
+  if(typeof main!=="function")throw new Error("The Eaglercraft main() entry point was not found.");
+  window.eaglercraftXOpts={
+   demoMode:false,
+   container:"game_frame",
+   assetsURI:"https://raw.githubusercontent.com/UserArham/Eaglercraft-1.12.2-Modded/main/assets.epk",
+   worldsDB:"worlds",
+   servers:[
+    {addr:"wss://play.zelz.net",name:"ZelzNet"},
+    {addr:"wss://mc.arch.lol",name:"ArchMC"},
+    {addr:"wss://beta.arch.lol",name:"ArchMC Beta"}
+   ]
+  };
+  main();
+  loading.hidden=true;
+  statusEl.textContent="Eaglercraft 1.12.2 Modded launched";
+ }catch(e){
+  console.error(e);
+  errorEl.textContent=e.message||String(e);
+  statusEl.textContent="Client startup failed";
+ }
+});
+</script>
+</body>
+</html>

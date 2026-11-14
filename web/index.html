@@ -3,78 +3,52 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#101610">
-<meta name="description" content="Eaglercraft 1.12.2 Modded browser client">
-<title>Eaglercraft 1.12.2 Modded</title>
+<meta name="theme-color" content="#140f08">
+<meta name="description" content="Treasure Client 1.2 — Eaglercraft 1.12.2 with modern-content ViaVersion features.">
+<title>Eaglercraft 1.12.2 · Treasure Client 1.2</title>
 <style>
-:root{color-scheme:dark;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:#090d0a;color:#edf4eb}
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#090d0a}
-#game_frame{position:fixed;inset:0;background:#000}
-#game_frame canvas{display:block}
-.top-ui{position:fixed;z-index:10;top:14px;left:14px;right:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;pointer-events:none}
-.brand,.tools{display:flex;align-items:center;gap:10px;pointer-events:auto}
-.brand{padding:10px 14px;border:1px solid #334331;background:#101810eF;border-radius:13px;box-shadow:0 8px 32px #0008}
-.mark{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#86c76d;color:#0b1608;font-weight:900}
-.brand strong{display:block;font-size:13px;letter-spacing:.02em}.brand small{display:block;color:#9caf98;font-size:11px;margin-top:2px}
-.tools button,.tools a{border:1px solid #394938;background:#121b12;color:#edf4eb;border-radius:10px;padding:10px 13px;font:600 12px inherit;text-decoration:none;cursor:pointer}
-.tools button:hover,.tools a:hover{background:#1c2b1a;border-color:#75ad62}
-.info{position:fixed;z-index:10;bottom:14px;left:14px;max-width:min(620px,calc(100vw - 28px));padding:10px 13px;border:1px solid #354333;border-radius:12px;background:#101810ed;color:#b9c8b4;font-size:11px;line-height:1.55;backdrop-filter:blur(12px)}
-.info strong{color:#edf4eb}.info a{color:#a8df91}.status{color:#a8df91}
-#loading{position:fixed;inset:0;z-index:5;display:grid;place-items:center;background:#090d0a;text-align:center;padding:24px}
-#loading[hidden]{display:none}.loader-card{max-width:440px}.loader-card h1{font-size:clamp(24px,5vw,38px);margin:0 0 10px}.loader-card p{color:#aab8a5;line-height:1.6;font-size:14px}.spinner{width:34px;height:34px;border:3px solid #30402d;border-top-color:#9bd77e;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 22px}@keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:600px){.top-ui{top:8px;left:8px;right:8px;align-items:flex-start}.brand{padding:8px 10px}.tools{gap:6px;flex-wrap:wrap;justify-content:flex-end}.tools button,.tools a{padding:9px;font-size:11px}.info{bottom:8px;left:8px;max-width:calc(100vw - 16px)}}
+:root{color-scheme:dark;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:#090807;color:#f4eee3}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#090807}
+#client{position:fixed;inset:0;width:100%;height:100%;border:0;background:#000}
+.top{position:fixed;z-index:5;top:12px;left:12px;right:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;pointer-events:none}
+.brand,.actions{pointer-events:auto;display:flex;align-items:center;gap:9px}
+.brand{padding:10px 14px;border:1px solid #57472d;border-radius:12px;background:#17120deF;box-shadow:0 8px 30px #0008}
+.mark{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;background:#d6a64e;color:#211506;font-weight:900}
+.brand strong{display:block;font-size:13px}.brand small{display:block;margin-top:3px;color:#c7b99f;font-size:11px}
+.actions button,.actions a{border:1px solid #665234;background:#1a140d;color:#f4eee3;border-radius:9px;padding:10px 13px;font:600 12px inherit;text-decoration:none;cursor:pointer}
+.actions button:hover,.actions a:hover{background:#302313;border-color:#d6a64e}
+.note{position:fixed;z-index:5;bottom:12px;left:12px;max-width:min(660px,calc(100vw - 24px));padding:10px 13px;border:1px solid #57472d;border-radius:11px;background:#17120ded;color:#d1c4ad;font-size:11px;line-height:1.55;backdrop-filter:blur(10px)}
+.note a{color:#f0c879}.note strong{color:#fff3dc}
+#loading{position:fixed;z-index:4;inset:0;display:grid;place-items:center;background:#090807;text-align:center;padding:24px}
+#loading[hidden]{display:none}.loadbox{max-width:440px}.loadbox h1{font-size:clamp(22px,4vw,34px);margin:0 0 9px}.loadbox p{color:#c7b99f;line-height:1.6;font-size:13px}
+.spinner{width:34px;height:34px;border:3px solid #4b3b25;border-top-color:#e5b65d;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 20px}@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:620px){.top{top:7px;left:7px;right:7px;align-items:flex-start}.brand{padding:8px 9px}.actions{gap:5px;flex-wrap:wrap;justify-content:flex-end}.actions button,.actions a{padding:8px;font-size:10px}.note{bottom:7px;left:7px;max-width:calc(100vw - 14px);font-size:10px}}
 </style>
-<script src="https://raw.githubusercontent.com/UserArham/Eaglercraft-1.12.2-Modded/main/classes.js"></script>
 </head>
 <body>
-<div id="game_frame"></div>
-<div id="loading"><div class="loader-card"><div class="spinner"></div><h1>Starting Eaglercraft</h1><p>Loading the real 1.12.2 Modded client and its asset package…</p><p id="load-error" role="status"></p></div></div>
-<header class="top-ui">
- <div class="brand"><span class="mark">E</span><span><strong>Eaglercraft</strong><small>1.12.2 · Modded client</small></span></div>
- <nav class="tools" aria-label="Client tools">
+<iframe id="client" title="Treasure Client 1.2 — Eaglercraft 1.12.2" src="https://treasureclient.github.io/versions/1.12WASM.html" allow="fullscreen; autoplay; gamepad; clipboard-read; clipboard-write" allowfullscreen></iframe>
+<div id="loading"><div class="loadbox"><div class="spinner"></div><h1>Loading Treasure Client 1.2</h1><p>Starting the upstream Eaglercraft 1.12.2 WASM client. The first load may take a little while.</p><p id="loadstate">Waiting for the game…</p></div></div>
+<header class="top">
+ <div class="brand"><span class="mark">T</span><span><strong>Treasure Client</strong><small>1.2 · Eaglercraft 1.12.2 · ViaVersion features</small></span></div>
+ <nav class="actions" aria-label="Client tools">
   <button id="fullscreen" type="button">Fullscreen</button>
-  <a href="https://github.com/UserArham/Eaglercraft-1.12.2-Modded" target="_blank" rel="noopener">Client source ↗</a>
+  <a href="https://treasureclient.github.io/versions/1.12WASM.html" target="_blank" rel="noopener">Open client ↗</a>
  </nav>
 </header>
-<aside class="info">
- <strong class="status" id="client-status">Starting game…</strong> · Real Eaglercraft 1.12.2 client from <a href="https://github.com/UserArham/Eaglercraft-1.12.2-Modded">UserArham/Eaglercraft-1.12.2-Modded</a>.<br>
- Optional modern-looking resource packs: <a href="https://raw.githubusercontent.com/UserArham/Eaglercraft-1.12.2-Modded/main/mods/1-21-textures-for-1-12.zip" download>1.21 textures</a> · <a href="https://raw.githubusercontent.com/UserArham/Eaglercraft-1.12.2-Modded/main/mods/26-1-textures-for-1-12.zip" download>26.1 textures</a>. Download and try them through the in-game Resource Packs menu; compatibility is not guaranteed.<br>
- <strong>ViaVersion note:</strong> ViaVersion is server-side protocol translation, not a client item pack. It does not add modern item IDs or gameplay to this 1.12.2 client. Modern server access needs a compatible Eaglercraft-to-Java protocol bridge and server-side translation.
+<aside class="note">
+ <strong>ViaVersion / modern content</strong> · Upstream 1.2 changelog lists modern blocks and items, wind charges, maces, spears, copper items, updated textures and potion colors, spear jab/charge, and TuffX+ compatibility. Server-side support is required for compatible multiplayer features.<br>
+ Source: <a href="https://github.com/TreasureClient/Treasure-Client-1.12-src" target="_blank" rel="noopener">Treasure Client source (Apache-2.0)</a> · <a href="https://github.com/TreasureClient/treasureclient.github.io/releases/tag/V1.2" target="_blank" rel="noopener">V1.2 release</a> · <a href="./legacy.html">Original UserArham client</a>
 </aside>
 <script>
 "use strict";
-const statusEl=document.getElementById("client-status");
+const frame=document.getElementById("client");
 const loading=document.getElementById("loading");
-const errorEl=document.getElementById("load-error");
+const state=document.getElementById("loadstate");
+frame.addEventListener("load",()=>{loading.hidden=true;});
+frame.addEventListener("error",()=>{state.textContent="The hosted client could not be loaded. Use the Open client link above.";});
 document.getElementById("fullscreen").addEventListener("click",async()=>{
- try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen();}
- catch(e){statusEl.textContent="Fullscreen unavailable in this browser";}
-});
-window.addEventListener("error",e=>{
- if(e.target&&e.target.tagName==="SCRIPT"){errorEl.textContent="The game engine script could not be loaded. Check access to raw.githubusercontent.com.";statusEl.textContent="Engine download failed";}
-},true);
-window.addEventListener("load",()=>{
- try{
-  if(typeof main!=="function")throw new Error("The Eaglercraft main() entry point was not found.");
-  window.eaglercraftXOpts={
-   demoMode:false,
-   container:"game_frame",
-   assetsURI:"https://raw.githubusercontent.com/UserArham/Eaglercraft-1.12.2-Modded/main/assets.epk",
-   worldsDB:"worlds",
-   servers:[
-    {addr:"wss://play.zelz.net",name:"ZelzNet"},
-    {addr:"wss://mc.arch.lol",name:"ArchMC"},
-    {addr:"wss://beta.arch.lol",name:"ArchMC Beta"}
-   ]
-  };
-  main();
-  loading.hidden=true;
-  statusEl.textContent="Eaglercraft 1.12.2 Modded launched";
- }catch(e){
-  console.error(e);
-  errorEl.textContent=e.message||String(e);
-  statusEl.textContent="Client startup failed";
- }
+ try{if(!document.fullscreenElement)await frame.requestFullscreen();else await document.exitFullscreen();}
+ catch(e){state.textContent="Fullscreen is unavailable here; use the Open client link.";}
 });
 </script>
 </body>
