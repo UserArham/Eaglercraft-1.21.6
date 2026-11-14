@@ -26,8 +26,8 @@
 </style>
 <script src="https://raw.githubusercontent.com/UserArham/Eaglercraft-1.12.2-Modded/main/classes.js"></script>
 </head>
-<body>
-<div id="game_frame"></div>
+<body id="game_frame">
+
 <div id="loading"><div class="loader-card"><div class="spinner"></div><h1>Starting Eaglercraft</h1><p>Loading the real 1.12.2 Modded client and its asset package…</p><p id="load-error" role="status"></p></div></div>
 <header class="top-ui">
  <div class="brand"><span class="mark">E</span><span><strong>Eaglercraft</strong><small>1.12.2 · Modded client</small></span></div>
@@ -55,11 +55,11 @@ window.addEventListener("error",e=>{
 },true);
 window.addEventListener("load",()=>{
  try{
-  if(typeof main!=="function")throw new Error("The Eaglercraft main() entry point was not found.");
   window.eaglercraftXOpts={
    demoMode:false,
    container:"game_frame",
    assetsURI:"https://raw.githubusercontent.com/UserArham/Eaglercraft-1.12.2-Modded/main/assets.epk",
+   localesURI:"https://raw.githubusercontent.com/UserArham/Eaglercraft-1.12.2-Modded/main/lang/",
    worldsDB:"worlds",
    servers:[
     {addr:"wss://play.zelz.net",name:"ZelzNet"},
@@ -67,7 +67,9 @@ window.addEventListener("load",()=>{
     {addr:"wss://beta.arch.lol",name:"ArchMC Beta"}
    ]
   };
-  main();
+  if(typeof window.main==="function") window.main();
+  else if(typeof main==="function") main();
+  else throw new Error("classes.js loaded, but its main() entry point is unavailable. The bundle may not be the expected Eaglercraft build.");
   loading.hidden=true;
   statusEl.textContent="Eaglercraft 1.12.2 Modded launched";
  }catch(e){
