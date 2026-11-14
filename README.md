@@ -1,37 +1,29 @@
-# Eaglercraft 1.21.6
+# Eaglercraft browser client — 1.12.2 Modded
 
-A browser-based client project targeting Minecraft Java Edition 1.21.6.
+This GitHub Pages project now launches the **real Eaglercraft 1.12.2 Modded client** from [UserArham/Eaglercraft-1.12.2-Modded](https://github.com/UserArham/Eaglercraft-1.12.2-Modded). It is not a Minecraft 1.21.6 client. The earlier 1.21.6 label was a target that this source does not satisfy.
 
-> **Status: early development / not playable.** The repository contains a static browser platform layer, WebGL2 renderer smoke test, browser diagnostics, and a Pages deployment workflow. It does not yet contain Minecraft game code, a 1.21.6 protocol implementation, or a playable client.
+## What runs
 
-## Current implementation
+- The actual compiled Eaglercraft client bundle: `classes.js`.
+- The matching game asset package: `assets.epk`.
+- The source client's configured multiplayer entries.
+- Browser-local single-player world storage via IndexedDB.
+- A fullscreen control and links to optional texture-pack archives.
 
-- [x] Dedicated repository and Apache-2.0 license file.
-- [x] Static browser entry page and root redirect for GitHub Pages.
-- [x] WebGL2 context initialization, shader compilation, buffers, depth testing, and animation loop smoke test.
-- [x] Browser adapters for keyboard input, pointer lock, local storage, WebSocket creation, and Web Audio.
-- [x] Browser capability diagnostics and explicit engine-module loading boundary.
-- [x] GitHub Actions workflow to publish the static site to GitHub Pages.
-- [ ] Identify and verify a legally usable 1.21.6-compatible game source baseline.
-- [ ] Establish a reproducible Java 21 / TeaVM build pipeline.
-- [ ] Integrate actual Minecraft client code and browser-compatible replacements.
-- [ ] Implement and test 1.21.6 networking, assets, rendering, audio, and gameplay.
-- [ ] Publish a playable build only after compatibility testing.
+The game engine and asset package are loaded from the source repository's `main` branch using raw GitHub URLs. The source repository must remain available, and GitHub's raw content host must be reachable from the browser.
+
+## Modern-looking textures and ViaVersion
+
+The page provides optional downloads for the source repository's `1-21-textures-for-1-12.zip` and `26-1-textures-for-1-12.zip` archives. Download a pack and try it through the in-game **Options → Resource Packs** screen. Texture packs can change appearances only; they do not add modern item IDs, recipes, blocks, entities, or mechanics. The packs are supplied as-is, and compatibility with this exact client build has not been independently verified.
+
+ViaVersion is server-side protocol translation. It is not a client mod or item pack, and placing a ViaVersion jar in this static GitHub Pages site would not enable it. Connecting this Eaglercraft client to modern Java servers requires a compatible Eaglercraft-to-Java protocol bridge plus appropriate server-side translation (for older-client-to-newer-server support, a server setup may also need ViaBackwards). No such bridge or ViaVersion server has been configured by this repository.
 
 ## GitHub Pages
 
-In repository **Settings → Pages**, set the build and deployment source to **GitHub Actions**. The workflow in `.github/workflows/pages.yml` publishes the root page and the `web/` directory on pushes to `main`.
+In **Settings → Pages**, choose **GitHub Actions** as the deployment source. The existing workflow publishes the static `web/` directory. The Pages workflow has been left unchanged.
 
-Expected site URL: https://userarham.github.io/Eaglercraft-1.21.6/
+Expected URL: https://userarham.github.io/Eaglercraft-1.21.6/
 
-## What the current page does
+## Attribution and licensing
 
-The page displays a rotating test cube when WebGL2 is available and lists browser capability checks. The cube verifies the graphics pipeline only; it is not Minecraft gameplay. Keyboard and pointer-lock events, storage, networking, and audio are exposed as browser platform services for a future engine.
-
-For local testing, serve the repository root using any static HTTP server and open `/` (or `/web/`). ES modules should not be tested through `file://`.
-
-## Licensing
-
-The Apache-2.0 license in this repository applies only to original project material that contributors are authorized to license. It does not grant rights to Minecraft's proprietary code, assets, or trademarks. Every imported component must be reviewed under its own license and attribution requirements. Do not add proprietary game assets or source code unless their use and redistribution are authorized.
-
-See [DEVELOPMENT.md](DEVELOPMENT.md) for architecture and build requirements.
+The client bundle, asset package, and optional texture archives are loaded from [UserArham/Eaglercraft-1.12.2-Modded](https://github.com/UserArham/Eaglercraft-1.12.2-Modded). Review that repository's license and notices for the upstream components. The Apache-2.0 license in this repository applies only to original project material that contributors are authorized to license; it does not grant rights to Minecraft proprietary content or trademarks.

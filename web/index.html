@@ -1,105 +1,81 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b1118">
-  <meta name="description" content="Eaglercraft 1.21.6 browser client development build">
-  <title>Eaglercraft 1.21.6</title>
-  <link rel="stylesheet" href="./style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101610">
+<meta name="description" content="Eaglercraft 1.12.2 Modded browser client">
+<title>Eaglercraft 1.12.2 Modded</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:#090d0a;color:#edf4eb}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#090d0a}
+#game_frame{position:fixed;inset:0;background:#000}
+#game_frame canvas{display:block}
+.top-ui{position:fixed;z-index:10;top:14px;left:14px;right:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;pointer-events:none}
+.brand,.tools{display:flex;align-items:center;gap:10px;pointer-events:auto}
+.brand{padding:10px 14px;border:1px solid #334331;background:#101810eF;border-radius:13px;box-shadow:0 8px 32px #0008}
+.mark{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#86c76d;color:#0b1608;font-weight:900}
+.brand strong{display:block;font-size:13px;letter-spacing:.02em}.brand small{display:block;color:#9caf98;font-size:11px;margin-top:2px}
+.tools button,.tools a{border:1px solid #394938;background:#121b12;color:#edf4eb;border-radius:10px;padding:10px 13px;font:600 12px inherit;text-decoration:none;cursor:pointer}
+.tools button:hover,.tools a:hover{background:#1c2b1a;border-color:#75ad62}
+.info{position:fixed;z-index:10;bottom:14px;left:14px;max-width:min(620px,calc(100vw - 28px));padding:10px 13px;border:1px solid #354333;border-radius:12px;background:#101810ed;color:#b9c8b4;font-size:11px;line-height:1.55;backdrop-filter:blur(12px)}
+.info strong{color:#edf4eb}.info a{color:#a8df91}.status{color:#a8df91}
+#loading{position:fixed;inset:0;z-index:5;display:grid;place-items:center;background:#090d0a;text-align:center;padding:24px}
+#loading[hidden]{display:none}.loader-card{max-width:440px}.loader-card h1{font-size:clamp(24px,5vw,38px);margin:0 0 10px}.loader-card p{color:#aab8a5;line-height:1.6;font-size:14px}.spinner{width:34px;height:34px;border:3px solid #30402d;border-top-color:#9bd77e;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 22px}@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:600px){.top-ui{top:8px;left:8px;right:8px;align-items:flex-start}.brand{padding:8px 10px}.tools{gap:6px;flex-wrap:wrap;justify-content:flex-end}.tools button,.tools a{padding:9px;font-size:11px}.info{bottom:8px;left:8px;max-width:calc(100vw - 16px)}}
+</style>
+<script src="https://raw.githubusercontent.com/UserArham/Eaglercraft-1.12.2-Modded/main/classes.js"></script>
 </head>
 <body>
-  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
-  <main class="shell">
-    <header class="topbar">
-      <a class="brand" href="./" aria-label="Eaglercraft home">
-        <span class="brand-mark">E</span>
-        <span class="brand-copy"><strong>Eaglercraft</strong><small>Java Edition · 1.21.6</small></span>
-      </a>
-      <div class="topbar-right">
-        <span class="build-chip"><i></i> DEVELOPMENT BUILD</span>
-        <a class="github-link" href="https://github.com/UserArham/Eaglercraft-1.21.6" target="_blank" rel="noreferrer">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.56.1.76-.24.76-.54v-2.1c-3.1.67-3.75-1.31-3.75-1.31-.5-1.28-1.24-1.62-1.24-1.62-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15 1 .1.77 2.09 3.2 1.59.1-.72.4-1.21.72-1.49-2.48-.28-5.09-1.24-5.09-5.52 0-1.22.44-2.22 1.15-3-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.05 1.15a10.6 10.6 0 0 1 5.55 0c2.11-1.45 3.05-1.15 3.05-1.15.61 1.54.23 2.68.11 2.96.72.78 1.15 1.78 1.15 3 0 4.29-2.61 5.23-5.1 5.51.4.35.76 1.03.76 2.08v3.09c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z"/></svg>
-          Source
-        </a>
-      </div>
-    </header>
-
-    <section class="welcome">
-      <div>
-        <div class="eyebrow"><span class="eyebrow-line"></span> BROWSER CLIENT PROJECT</div>
-        <h1>Your next blocky<br><span>adventure starts here.</span></h1>
-        <p class="welcome-copy">A browser-first Minecraft client project, built for the web. The interface and graphics foundation are taking shape.</p>
-      </div>
-      <div class="version-card">
-        <span class="version-label">TARGET VERSION</span>
-        <strong>1.21.6</strong>
-        <span class="version-sub">Java Edition</span>
-        <span class="version-divider"></span>
-        <span class="engine-label"><i></i> Engine integration pending</span>
-      </div>
-    </section>
-
-    <section class="workspace" aria-label="Client preview">
-      <div class="preview-panel">
-        <div class="panel-heading">
-          <div><span class="panel-kicker">LIVE PREVIEW</span><h2>Graphics sandbox</h2></div>
-          <span class="preview-state"><i></i> WEBGL2 ACTIVE</span>
-        </div>
-        <div class="viewport" id="viewport">
-          <canvas id="game-canvas" aria-label="Animated WebGL2 renderer test"></canvas>
-          <div class="preview-overlay">
-            <span class="cube-symbol">◆</span>
-            <span class="overlay-title">The world is loading.</span>
-            <span class="overlay-copy">This is a renderer test scene, not the Minecraft game.</span>
-          </div>
-          <div class="viewport-corner">EAGLERCRAFT <b>·</b> 1.21.6</div>
-        </div>
-        <div class="preview-toolbar">
-          <div class="preview-caption"><span class="live-dot"></span><span id="runtime-status">Initializing browser runtime…</span></div>
-          <div class="toolbar-actions">
-            <button class="icon-button" id="pause-button" type="button" aria-label="Pause preview" title="Pause preview"><span id="pause-icon">Ⅱ</span><span id="pause-label">Pause</span></button>
-            <button class="icon-button" id="fullscreen-button" type="button" title="Enter fullscreen"><span class="fullscreen-icon">⛶</span><span>Fullscreen</span></button>
-          </div>
-        </div>
-      </div>
-
-      <aside class="side-panel">
-        <div class="side-heading"><span class="panel-kicker">PROJECT STATUS</span><span class="status-pulse"></span></div>
-        <div class="progress-block">
-          <div class="progress-title"><span>Client development</span><strong>Foundation</strong></div>
-          <div class="progress-track"><span></span></div>
-          <p>Browser foundation is in place. Minecraft engine integration has not started.</p>
-        </div>
-        <div class="side-divider"></div>
-        <h3>Core systems</h3>
-        <ul class="system-list">
-          <li><span class="system-icon">▧</span><span><b>Browser runtime</b><small>Platform APIs initialized</small></span><em class="state-ready">READY</em></li>
-          <li><span class="system-icon">◇</span><span><b>Graphics pipeline</b><small>WebGL2 renderer test</small><em class="state-ready">READY</em></span><em class="state-ready">READY</em></li>
-          <li><span class="system-icon">⌘</span><span><b>Minecraft engine</b><small>1.21.6 client integration</small></span><em class="state-pending">PENDING</em></li>
-          <li><span class="system-icon">⇄</span><span><b>Game networking</b><small>Protocol implementation</small></span><em class="state-pending">PENDING</em></li>
-        </ul>
-        <a class="repo-card" href="https://github.com/UserArham/Eaglercraft-1.21.6" target="_blank" rel="noreferrer">
-          <span class="repo-icon">⌁</span><span><b>Follow development</b><small>View source and commits on GitHub</small></span><span class="repo-arrow">↗</span>
-        </a>
-      </aside>
-    </section>
-
-    <section class="diagnostics-panel">
-      <button class="diagnostics-toggle" id="diagnostics-toggle" type="button" aria-expanded="false" aria-controls="diagnostics-content">
-        <span><span class="panel-kicker">SYSTEM CHECK</span><b>Browser compatibility</b></span>
-        <span class="diagnostics-right"><span id="diagnostics-summary">Checking capabilities…</span><span class="chevron">⌄</span></span>
-      </button>
-      <div class="diagnostics-content" id="diagnostics-content" hidden>
-        <ul id="diagnostics-list" class="diagnostics-list"><li>Checking browser capabilities…</li></ul>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <span>Unofficial browser client project · Not affiliated with Mojang or Microsoft</span>
-      <span class="footer-right"><span id="graphics-status">Graphics: checking…</span><span class="footer-separator">·</span><span id="input-status">Input: ready</span></span>
-    </footer>
-  </main>
-  <script type="module" src="./main.js"></script>
+<div id="game_frame"></div>
+<div id="loading"><div class="loader-card"><div class="spinner"></div><h1>Starting Eaglercraft</h1><p>Loading the real 1.12.2 Modded client and its asset package…</p><p id="load-error" role="status"></p></div></div>
+<header class="top-ui">
+ <div class="brand"><span class="mark">E</span><span><strong>Eaglercraft</strong><small>1.12.2 · Modded client</small></span></div>
+ <nav class="tools" aria-label="Client tools">
+  <button id="fullscreen" type="button">Fullscreen</button>
+  <a href="https://github.com/UserArham/Eaglercraft-1.12.2-Modded" target="_blank" rel="noopener">Client source ↗</a>
+ </nav>
+</header>
+<aside class="info">
+ <strong class="status" id="client-status">Starting game…</strong> · Real Eaglercraft 1.12.2 client from <a href="https://github.com/UserArham/Eaglercraft-1.12.2-Modded">UserArham/Eaglercraft-1.12.2-Modded</a>.<br>
+ Optional modern-looking resource packs: <a href="https://raw.githubusercontent.com/UserArham/Eaglercraft-1.12.2-Modded/main/mods/1-21-textures-for-1-12.zip" download>1.21 textures</a> · <a href="https://raw.githubusercontent.com/UserArham/Eaglercraft-1.12.2-Modded/main/mods/26-1-textures-for-1-12.zip" download>26.1 textures</a>. Download and try them through the in-game Resource Packs menu; compatibility is not guaranteed.<br>
+ <strong>ViaVersion note:</strong> ViaVersion is server-side protocol translation, not a client item pack. It does not add modern item IDs or gameplay to this 1.12.2 client. Modern server access needs a compatible Eaglercraft-to-Java protocol bridge and server-side translation.
+</aside>
+<script>
+"use strict";
+const statusEl=document.getElementById("client-status");
+const loading=document.getElementById("loading");
+const errorEl=document.getElementById("load-error");
+document.getElementById("fullscreen").addEventListener("click",async()=>{
+ try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen();}
+ catch(e){statusEl.textContent="Fullscreen unavailable in this browser";}
+});
+window.addEventListener("error",e=>{
+ if(e.target&&e.target.tagName==="SCRIPT"){errorEl.textContent="The game engine script could not be loaded. Check access to raw.githubusercontent.com.";statusEl.textContent="Engine download failed";}
+},true);
+window.addEventListener("load",()=>{
+ try{
+  if(typeof main!=="function")throw new Error("The Eaglercraft main() entry point was not found.");
+  window.eaglercraftXOpts={
+   demoMode:false,
+   container:"game_frame",
+   assetsURI:"https://raw.githubusercontent.com/UserArham/Eaglercraft-1.12.2-Modded/main/assets.epk",
+   worldsDB:"worlds",
+   servers:[
+    {addr:"wss://play.zelz.net",name:"ZelzNet"},
+    {addr:"wss://mc.arch.lol",name:"ArchMC"},
+    {addr:"wss://beta.arch.lol",name:"ArchMC Beta"}
+   ]
+  };
+  main();
+  loading.hidden=true;
+  statusEl.textContent="Eaglercraft 1.12.2 Modded launched";
+ }catch(e){
+  console.error(e);
+  errorEl.textContent=e.message||String(e);
+  statusEl.textContent="Client startup failed";
+ }
+});
+</script>
 </body>
 </html>
